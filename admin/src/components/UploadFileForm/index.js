@@ -15,16 +15,15 @@ function UploadFileForm({ onSubmit }) {
   const [data, setData] = useState("");
 
   const handleFileUpload = async (file) => {
-    try {
-      const content = await readFileContent(file);
+    readFileContent(file).then(content => {
       setData(content);
       setFile(file);
-    } catch (err) {
+    }).catch(err => {
       strapi.notification.toggle({
         type: "warning",
         message: "import.file.content.error",
       });
-    }
+    });
   };
 
   const removeFile = () => {
