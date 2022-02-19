@@ -17,8 +17,15 @@ async function getValidRelations(value, attribute) {
     return entities.map(({ id }) => id);
   } else {
     const relation = Array.isArray(value) ? value[0] : value;
+    if (!relation) return null;
     const id = getId(relation);
-    const entity = await strapi.query(targetModel).findOne({ id });
+    let entity = null;
+    if (id) {
+      entity = await strapi.query(targetModel).findOne({ id });
+    } else {
+      entity = await strapi.query(targetModel).findOne(relation);
+    }
+    
     return entity ? entity.id : null;
   }
 }
