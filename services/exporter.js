@@ -1,6 +1,5 @@
 const PERMISSIONS = require("../constants/permissions");
 const ignoreFields = [
-  "id",
   "created_at",
   "created_by",
   "updated_at",

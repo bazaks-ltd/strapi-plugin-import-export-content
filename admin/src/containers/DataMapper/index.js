@@ -11,7 +11,6 @@ import pluginId from "../../pluginId";
 
 const filterIgnoreFields = (fieldName) =>
   ![
-    "id",
     "created_at",
     "created_by",
     "updated_at",
