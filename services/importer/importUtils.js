@@ -7,8 +7,7 @@ const importToCollectionType = async (uid, item) => {
       existing = await strapi.query(uid).count({id});
     }
 
-
-    if (existing === 0) {
+    if (!existing) {
       await strapi.entityService.create({ data: item }, { model: uid });
     } else {
       await strapi.query(uid).update({id}, item);
