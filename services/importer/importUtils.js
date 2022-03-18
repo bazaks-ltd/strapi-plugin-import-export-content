@@ -1,3 +1,5 @@
+const { sanitizeEntity } = require('strapi-utils');
+
 const importToCollectionType = async (uid, item) => {
   try {
 
@@ -6,15 +8,16 @@ const importToCollectionType = async (uid, item) => {
     if (id) {
       existing = await strapi.query(uid).count({id});
     }
+    let r;
 
     if (!existing) {
-      await strapi.entityService.create({ data: item }, { model: uid });
+      r = await strapi.entityService.create({ data: item }, { model: uid });
     } else {
-      await strapi.query(uid).update({id}, item);
+      r = await strapi.query(uid).update({id}, item);
     }
-
-    return true;
+    return sanitizeEntity(r, { model: strapi.models[uid.split(".")[1]]});
   } catch (error) {
+    console.log('error', error)
     return false;
   }
 };

@@ -69,6 +69,7 @@ module.exports = {
           : results.some((res) => res)
           ? "Some Items Imported"
           : "No Items Imported",
+        results,
       });
     } catch (error) {
       console.error(error);
