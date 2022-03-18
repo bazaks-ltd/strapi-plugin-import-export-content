@@ -8,14 +8,14 @@ const importToCollectionType = async (uid, item) => {
     if (id) {
       existing = await strapi.query(uid).count({id});
     }
-    let r;
+    let result;
 
     if (!existing) {
-      r = await strapi.entityService.create({ data: item }, { model: uid });
+      result = await strapi.entityService.create({ data: item }, { model: uid });
     } else {
-      r = await strapi.query(uid).update({id}, item);
+      result = await strapi.query(uid).update({id}, item);
     }
-    return sanitizeEntity(r, { model: strapi.models[uid.split(".")[1]]});
+    return sanitizeEntity({...result, _updated: existing }, { model: strapi.models[uid.split(".")[1]]});
   } catch (error) {
     console.log('error', error)
     return false;
